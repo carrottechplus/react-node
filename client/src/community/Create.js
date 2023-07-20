@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Layout from '../common/Layout';
 
 function Create() {
 	const [Ttl, setTtl] = useState('');
@@ -16,7 +17,7 @@ function Create() {
 	useEffect(() => {}, []);
 
 	return (
-		<section>
+		<Layout name={'Post'}>
 			<label htmlFor='ttl'>title</label>
 			<br />
 			<input type='text' id='ttl' value={Ttl} onChange={(e) => setTtl(e.target.value)} />
@@ -28,7 +29,7 @@ function Create() {
 			<button onClick={handleCreate} type='button'>
 				Send
 			</button>
-		</section>
+		</Layout>
 	);
 }
 

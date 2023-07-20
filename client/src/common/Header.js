@@ -10,7 +10,7 @@ function Header() {
 			</h1>
 			<ul id='gnb'>
 				<li>
-					<NavLink to='/' style={(props) => (props.isActive ? activeStyle : null)}>
+					<NavLink to='/list' style={(props) => (props.isActive ? activeStyle : null)}>
 						Show List
 					</NavLink>
 				</li>
