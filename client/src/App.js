@@ -1,22 +1,44 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
-	const item = { name: 'John' };
+	const [Ttl, setTtl] = useState('');
+	const [Con, setCon] = useState('');
 
-	useEffect(() => {
+	const handleCreate = () => {
+		const item = { title: Ttl, content: Con };
+
 		axios
-			.post('/api/send', item)
-			.then((res) => {
-				// 서버쪽에서 응답이 성공적으로 넘어오면 ㅐㅎ당 값을 콘솖문으로 출력
-				console.log(res);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
+			.post('/api/create', item)
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
+	};
 
-	return <h1>Hello3</h1>;
+	useEffect(() => {}, []);
+
+	return (
+		<section>
+			<label htmlFor='ttl'>title</label>
+			<br />
+			<input type='text' id='ttl' value={Ttl} onChange={(e) => setTtl(e.target.value)} />
+			<br />
+			<label htmlFor='con'>Content</label>
+			<br />
+			<textarea name='con' id='con' cols='30' rows='3' value={Con} onChange={(e) => setCon(e.target.value)}></textarea>
+			<br />
+			<button onClick={handleCreate} type='button'>
+				Send
+			</button>
+		</section>
+	);
 }
 
 export default App;
+
+/* 
+CRUD
+create (저장)
+read   (읽기)
+update (수정)
+delete (삭제)
+*/
