@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const app = express();
 const port = 5500;
+const { Post } = require('./model/postSchema.js');
 
 //클라이언트로 부터 보내진 데이터를 전달받도록 설정 (body-parser) json으로 다시 패치해서 받는거
 app.use(express.json());
@@ -30,14 +31,18 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-//리액트로부터 전달된 요청 라우터 test
-// app.post('/api/send', (req, res) => {
-// 	console.log(req.body);
-// 	res.json({ success: true, result: req.body.name + '2' });
-// });
-
 //create
 app.post('/api/create', (req, res) => {
+	// PostSchema가 적용된 Post 모델 생성자를 통해 저장 모델 인스턴스 생성
 	console.log(req.body);
-	res.json({ success: true });
+
+	const PostModel = new Post({
+		title: req.body.title,
+		content: req.body.content,
+	});
+
+	// 생성된 모델 인스턴스로부터 save 명령어로 DB 저장 (promise)
+	PostModel.save()
+		.then(() => res.json({ success: true }))
+		.catch(() => res.json({ success: false }));
 });
