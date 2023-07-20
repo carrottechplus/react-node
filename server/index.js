@@ -35,3 +35,9 @@ app.get('*', (req, res) => {
 // 	console.log(req.body);
 // 	res.json({ success: true, result: req.body.name + '2' });
 // });
+
+//create
+app.post('/api/create', (req, res) => {
+	console.log(req.body);
+	res.json({ success: true });
+});

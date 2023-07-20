@@ -7,7 +7,6 @@ function App() {
 
 	const handleCreate = () => {
 		const item = { title: Ttl, content: Con };
-
 		axios
 			.post('/api/create', item)
 			.then((res) => console.log(res))
