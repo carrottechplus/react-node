@@ -1,5 +1,5 @@
 function List() {
-	return <section></section>;
+	return <section>List</section>;
 }
 
 export default List;
