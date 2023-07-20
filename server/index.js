@@ -46,3 +46,17 @@ app.post('/api/create', (req, res) => {
 		.then(() => res.json({ success: true }))
 		.catch(() => res.json({ success: false }));
 });
+
+//read
+app.post('/api/read', (req, res) => {
+	Post.find()
+		.exec() //find명령어 exec(실행)
+		.then((doc) => {
+			console.log(doc);
+			res.json({ success: true, communityList: doc });
+		})
+		.catch((err) => {
+			console.log(err);
+			res.json({ success: false });
+		});
+});
