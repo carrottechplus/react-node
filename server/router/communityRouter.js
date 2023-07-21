@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { Post } = require('./model/postSchema.js');
-const { Counter } = require('./model/counterSchema.js');
+const { Post } = require('../model/postSchema.js');
+const { Counter } = require('../model/counterSchema.js');
 
 //create 글 저장 라우터
 router.post('/create', (req, res) => {
