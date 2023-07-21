@@ -3,8 +3,6 @@ const path = require('path');
 const mongoose = require('mongoose');
 const app = express();
 const port = 5500;
-const { Post } = require('./model/postSchema.js');
-const { Counter } = require('./model/counterSchema.js');
 
 //클라이언트로 부터 보내진 데이터를 전달받도록 설정 (body-parser) json으로 다시 패치해서 받는거
 app.use(express.json());
@@ -12,6 +10,9 @@ app.use(express.urlencoded({ extended: true }));
 
 //express에서 react안쪽 build폴더까지의 경로를 static으로 지정
 app.use(express.static(path.join(__dirname, '../client/build')));
+
+// crud 여러군데 생길 수 있어서 각각의 폴더로 나눔
+app.use('/api/community', require('./router/communityRouter.js'));
 
 app.listen(port, () => {
 	mongoose
@@ -30,54 +31,4 @@ app.get('/', (req, res) => {
 //어떤 URL에서 접속하더라도 화면이 뜨도록 설정
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
-
-//create
-app.post('/api/create', (req, res) => {
-	Counter.findOne({ name: 'counter' })
-		.exec()
-		.then((doc) => {
-			const PostModel = new Post({
-				title: req.body.title,
-				content: req.body.content,
-				communityNum: doc.communityNum,
-			});
-
-			PostModel.save().then(() => {
-				//update :
-				// $inc(증가), $dec(감소), $set(새로운 값으로 변경) -> 여기선 inc
-				Counter.updateOne({ name: 'counter' }, { $inc: { communityNum: 1 } })
-					.then(() => {
-						// 카운터값까지 업데이트 된 후에야
-						res.json({ success: true });
-					})
-					.catch(() => res.json({ success: false }));
-			});
-		});
-});
-
-//read 목록 출력 라우터
-app.post('/api/read', (req, res) => {
-	Post.find()
-		.exec() //find명령어 exec(실행)
-		.then((doc) => {
-			console.log(doc);
-			res.json({ success: true, communityList: doc });
-		})
-		.catch((err) => {
-			console.log(err);
-			res.json({ success: false });
-		});
-});
-
-//상세페이지 출력 라우터
-app.post('/api/detail', (req, res) => {
-	Post.findOne({ communityNum: req.body.id })
-		.exec()
-		.then((doc) => {
-			res.json({ success: true, detail: doc });
-		})
-		.catch((err) => {
-			res.json({ success: false, err: err });
-		});
 });
