@@ -28,7 +28,7 @@ router.post('/create', (req, res) => {
 });
 
 //read 목록 출력 라우터
-router.post('/read', (req, res) => {
+router.get('/read', (req, res) => {
 	Post.find()
 		.exec() //find명령어 exec(실행)
 		.then((doc) => {
