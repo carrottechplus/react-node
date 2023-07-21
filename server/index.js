@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 5500;
 const { Post } = require('./model/postSchema.js');
+const { Counter } = require('./model/counterSchema.js');
 
 //클라이언트로 부터 보내진 데이터를 전달받도록 설정 (body-parser) json으로 다시 패치해서 받는거
 app.use(express.json());
@@ -32,19 +33,41 @@ app.get('*', (req, res) => {
 });
 
 //create
+// app.post('/api/create', (req, res) => {
+// 	// PostSchema가 적용된 Post 모델 생성자를 통해 저장 모델 인스턴스 생성
+// 	console.log(req.body);
+
+// 	const PostModel = new Post({
+// 		title: req.body.title,
+// 		content: req.body.content,
+// 	});
+
+// 	// 생성된 모델 인스턴스로부터 save 명령어로 DB 저장 (promise)
+// 	PostModel.save()
+// 		.then(() => res.json({ success: true }))
+// 		.catch(() => res.json({ success: false }));
+// });
+
 app.post('/api/create', (req, res) => {
-	// PostSchema가 적용된 Post 모델 생성자를 통해 저장 모델 인스턴스 생성
-	console.log(req.body);
+	Counter.findOne({ name: 'counter' })
+		.exec()
+		.then((doc) => {
+			const PostModel = new Post({
+				title: req.body.title,
+				content: req.body.content,
+				communityNum: doc.communityNum,
+			});
 
-	const PostModel = new Post({
-		title: req.body.title,
-		content: req.body.content,
-	});
-
-	// 생성된 모델 인스턴스로부터 save 명령어로 DB 저장 (promise)
-	PostModel.save()
-		.then(() => res.json({ success: true }))
-		.catch(() => res.json({ success: false }));
+			PostModel.save().then(() => {
+				//update : $inc(증가), $dec(감소), $set(새로운 값으로 변경) -> 여기선 inc
+				Counter.updateOne({ name: 'counter' }, { $inc: { communityNum: 1 } })
+					.then(() => {
+						// 카운터값까지 업데이트 된 후에야
+						res.json({ success: true });
+					})
+					.catch(() => res.json({ success: false }));
+			});
+		});
 });
 
 //read
