@@ -33,21 +33,6 @@ app.get('*', (req, res) => {
 });
 
 //create
-// app.post('/api/create', (req, res) => {
-// 	// PostSchema가 적용된 Post 모델 생성자를 통해 저장 모델 인스턴스 생성
-// 	console.log(req.body);
-
-// 	const PostModel = new Post({
-// 		title: req.body.title,
-// 		content: req.body.content,
-// 	});
-
-// 	// 생성된 모델 인스턴스로부터 save 명령어로 DB 저장 (promise)
-// 	PostModel.save()
-// 		.then(() => res.json({ success: true }))
-// 		.catch(() => res.json({ success: false }));
-// });
-
 app.post('/api/create', (req, res) => {
 	Counter.findOne({ name: 'counter' })
 		.exec()
@@ -59,7 +44,8 @@ app.post('/api/create', (req, res) => {
 			});
 
 			PostModel.save().then(() => {
-				//update : $inc(증가), $dec(감소), $set(새로운 값으로 변경) -> 여기선 inc
+				//update :
+				// $inc(증가), $dec(감소), $set(새로운 값으로 변경) -> 여기선 inc
 				Counter.updateOne({ name: 'counter' }, { $inc: { communityNum: 1 } })
 					.then(() => {
 						// 카운터값까지 업데이트 된 후에야
@@ -70,7 +56,7 @@ app.post('/api/create', (req, res) => {
 		});
 });
 
-//read
+//read 목록 출력 라우터
 app.post('/api/read', (req, res) => {
 	Post.find()
 		.exec() //find명령어 exec(실행)
@@ -81,5 +67,17 @@ app.post('/api/read', (req, res) => {
 		.catch((err) => {
 			console.log(err);
 			res.json({ success: false });
+		});
+});
+
+//상세페이지 출력 라우터
+app.post('/api/detail', (req, res) => {
+	Post.findOne({ communityNum: req.body.id })
+		.exec()
+		.then((doc) => {
+			res.json({ success: true, detail: doc });
+		})
+		.catch((err) => {
+			res.json({ success: false, err: err });
 		});
 });
