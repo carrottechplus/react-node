@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Layout from '../common/Layout';
+import { useNavigate } from 'react-router-dom';
 
 function Create() {
+	const navigate = useNavigate();
 	const [Ttl, setTtl] = useState('');
 	const [Con, setCon] = useState('');
 
@@ -13,8 +15,8 @@ function Create() {
 			.then((res) => {
 				console.log(res);
 				alert('글 저장에 성공했습니다.');
-				setTtl('');
-				setCon('');
+				navigate('/list');
+				// navigate(-1); 이전페이지
 			})
 			.catch((err) => {
 				console.log(err);

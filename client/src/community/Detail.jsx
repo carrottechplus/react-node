@@ -53,7 +53,7 @@ function Detail() {
 					<Link to={`/edit/${params.id}`}>Edit</Link>
 				</div>
 				<div>
-					<Link to={`/edit/${params.id}`}>Delete</Link>
+					<Link>Delete</Link>
 				</div>
 			</BtnSet>
 		</Layout>
