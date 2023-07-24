@@ -34,7 +34,7 @@ function Create() {
 			<br />
 			<textarea name='con' id='con' cols='30' rows='3' value={Con} onChange={(e) => setCon(e.target.value)}></textarea>
 			<br />
-			<button onClick={handleCreate} type='button'>
+			<button type='button' onClick={handleCreate}>
 				Send
 			</button>
 		</Layout>

@@ -5,6 +5,7 @@ import List from './community/List';
 import Create from './community/Create';
 import Detail from './community/Detail';
 import GlobalStyle from './GlobalStyle';
+import Edit from './community/Edit';
 
 function App() {
 	return (
@@ -16,7 +17,8 @@ function App() {
 				<Route path='/' element={<Main />} />
 				<Route path='/list' element={<List />} />
 				<Route path='/create' element={<Create />} />
-				<Route path='/detail/:id' element={<Detail />} />
+				<Route path='/detail/:id' element={<Detail />} /> {/* :id : param */}
+				<Route path='/edit/:id' element={<Edit />} />
 			</Routes>
 		</>
 	);

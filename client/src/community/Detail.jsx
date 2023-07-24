@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Layout from '../common/Layout';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -9,6 +9,20 @@ const DetailWrap = styled.div`
 	padding: 40px;
 	background: #fff;
 	box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.02);
+`;
+
+const BtnSet = styled.nav`
+	display: flex;
+	gap: 20px;
+	margin-top: 20px;
+	a {
+		display: inline-block;
+		padding: 5px 20px;
+		background: rgb(85, 85, 85);
+		color: rgb(255, 255, 255);
+		border: none;
+		cursor: pointer;
+	}
 `;
 
 function Detail() {
@@ -27,12 +41,21 @@ function Detail() {
 			})
 			.catch((err) => console.log(err));
 	}, []);
+
 	return (
 		<Layout name={'Detail'}>
 			<DetailWrap>
 				<h2>{Detail?.title}</h2>
 				<p>{Detail?.content}</p>
 			</DetailWrap>
+			<BtnSet>
+				<div>
+					<Link to={`/edit/${params.id}`}>Edit</Link>
+				</div>
+				<div>
+					<Link to={`/edit/${params.id}`}>Delete</Link>
+				</div>
+			</BtnSet>
 		</Layout>
 	);
 }
