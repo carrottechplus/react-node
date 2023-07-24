@@ -16,31 +16,57 @@ function Edit() {
 	const params = useParams();
 	const [Title, setTitle] = useState('');
 	const [Content, setContent] = useState('');
+	const [Detail, setDetail] = useState({});
+
+	const handleUpdate = () => {
+		if (Title.trim() === '' || Content.trim() === '') return alert('모든 항목을 입력하세요.');
+
+		const item = {
+			title: Title,
+			content: Content,
+			id: params.id,
+		};
+
+		axios.post('/api/community/edit', item).then((res) => {
+			if (res.data.success) {
+				alert('글 수정이 완료 되었습니다.');
+			} else {
+				alert('글 수정에 실패하였습니다.');
+			}
+		});
+	};
 
 	useEffect(() => {
 		axios
 			.post('/api/community/detail', params)
 			.then((res) => {
 				if (res.data.success) {
-					console.log(res.data.detail);
-					setTitle(res.data.detail.title);
-					setContent(res.data.detail.content);
-				} else {
-					alert('fail');
+					setDetail(res.data.detail);
 				}
 			})
 			.catch((err) => console.log(err));
 	}, []);
 
+	useEffect(() => {
+		setTitle(Detail.title);
+		setContent(Detail.content);
+	}, [Detail]);
+
 	return (
 		<Layout name={'Post'}>
 			<label htmlFor='ttl'>Title</label>
-			<input type='text' id='ttl' value={Title} onChange={(e) => setTitle(e.target.value)} />
+			<input type='text' id='ttl' value={Title || ''} onChange={(e) => setTitle(e.target.value)} />
 			<br />
 			<label htmlFor='con'>Content</label>
-			<textarea id='con' cols='30' rows='3' value={Content} onChange={(e) => setContent(e.target.value)}></textarea>
+			<textarea
+				id='con'
+				cols='30'
+				rows='3'
+				value={Content || ''}
+				onChange={(e) => setContent(e.target.value)}
+			></textarea>
 			<br />
-			<button>Update</button>
+			<button onClick={handleUpdate}>Update</button>
 		</Layout>
 	);
 }

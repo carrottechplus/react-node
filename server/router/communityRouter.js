@@ -53,4 +53,21 @@ router.post('/detail', (req, res) => {
 		});
 });
 
+//글 수정요청 라우터
+router.post('/edit', (req, res) => {
+	const temp = {
+		title: req.body.title,
+		content: req.body.content,
+		// communityNum: req.body.id, 이건 바뀌는 부분이 아니기 때문에 안쓰기로
+	};
+
+	Post.updateOne({ communityNum: req.body.id }, { $set: temp })
+		.exec()
+		.then((doc) => {
+			console.log(doc);
+			res.json({ success: true });
+		})
+		.catch((err) => res.json({ success: false }));
+});
+
 module.exports = router;
