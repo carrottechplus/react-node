@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import firebase from '../firebase';
@@ -32,11 +32,34 @@ const Util = styled.ul`
 	bottom: 50px;
 	left: 50px;
 	display: flex;
+	align-items: center;
 	gap: 10px;
+
+	button {
+		margin: 0;
+		background: transparent;
+		border: none;
+	}
+	button,
 	a {
+		display: inline-block;
 		padding: 10px;
 		font: 14px/1 'arial';
 		color: #777;
+		&:hover {
+			color: #ddd;
+			cursor: pointer;
+		}
+	}
+	p {
+		display: inline-block;
+		padding: 10px;
+		font: 14px/1 'arial';
+		color: #bbb;
+		em {
+			font-weight: bold;
+			color: orange;
+		}
 	}
 `;
 
@@ -44,6 +67,7 @@ function Header() {
 	const activeStyle = { color: 'orange' };
 	const user = useSelector((store) => store.user);
 	console.log(user);
+	const navigate = useNavigate();
 
 	return (
 		<HeaderWrap>
@@ -83,12 +107,18 @@ function Header() {
 				) : (
 					// 로그인 상태
 					<>
-						<li>{`${user.displayName}님 반갑습니다.`}</li>
+						<li>
+							<p>
+								<em>{user.displayName}</em> 님 반갑습니다.
+							</p>
+						</li>
 						<li>
 							<button
 								type='button'
 								onClick={() => {
 									firebase.auth().signOut();
+									alert('로그아웃 되었습니다.');
+									navigate('/');
 								}}
 							>
 								로그아웃

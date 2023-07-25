@@ -16,6 +16,7 @@ function Login() {
 
 		try {
 			await firebase.auth().signInWithEmailAndPassword(Email, Pwd);
+			alert('로그인이 되었습니다.');
 			navigate('/');
 		} catch (err) {
 			console.log(err.code);
