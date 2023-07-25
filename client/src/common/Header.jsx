@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const HeaderWrap = styled.header`
 	width: 350px;
@@ -40,6 +41,8 @@ const Util = styled.ul`
 
 function Header() {
 	const activeStyle = { color: 'orange' };
+	const user = useSelector((store) => store.user);
+	console.log(user);
 
 	return (
 		<HeaderWrap>
