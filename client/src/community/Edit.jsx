@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Layout from '../common/Layout';
+import { useSelector } from 'react-redux';
 
 // 글 수정 흐름
 /*
@@ -13,6 +14,7 @@ import Layout from '../common/Layout';
  */
 
 function Edit() {
+	const user = useSelector((store) => store.user);
 	const navigate = useNavigate();
 	const params = useParams();
 	const [Title, setTitle] = useState('');
@@ -39,6 +41,7 @@ function Edit() {
 	};
 
 	useEffect(() => {
+		if (user.uid === '') navigate('/');
 		axios
 			.post('/api/community/detail', params)
 			.then((res) => {
@@ -47,7 +50,7 @@ function Edit() {
 				}
 			})
 			.catch((err) => console.log(err));
-	}, []);
+	}, [navigate, user, params]);
 
 	useEffect(() => {
 		setTitle(Detail.title);
