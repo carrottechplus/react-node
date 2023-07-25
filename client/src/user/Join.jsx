@@ -2,8 +2,13 @@ import { useState } from 'react';
 import Layout from '../common/Layout';
 import firebase from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-// 사용자 정보 받을 것 state에 담기
+const BtnSet = styled.nav`
+	margin-top: 20px;
+	display: flex;
+	gap: 20px;
+`;
 function Join() {
 	const navigate = useNavigate();
 	const [Email, setEmail] = useState('');
@@ -32,28 +37,30 @@ function Join() {
 				placeholder='이메일 주소를 입력하세요.'
 				onChange={(e) => setEmail(e.target.value)}
 			/>
-			<br />
+
 			<input
 				type='password'
 				value={Pwd01}
 				placeholder='비밀번호 입력하세요.'
 				onChange={(e) => setPwd01(e.target.value)}
 			/>
-			<br />
+
 			<input
 				type='password'
 				value={Pwd02}
 				placeholder='비밀번호 다시 입력하세요.'
 				onChange={(e) => setPwd02(e.target.value)}
 			/>
-			<br />
+
 			<input type='text' value={Name} placeholder='이름을 입력하세요.' onChange={(e) => setName(e.target.value)} />
-			<button type='button' onClick={() => navigate(-1)}>
-				취소하기
-			</button>
-			<button type='button' onClick={handleJoin}>
-				회원가입 하기
-			</button>
+			<BtnSet>
+				<button type='button' onClick={() => navigate(-1)}>
+					취소하기
+				</button>
+				<button type='button' onClick={handleJoin}>
+					회원가입 하기
+				</button>
+			</BtnSet>
 		</Layout>
 	);
 }
