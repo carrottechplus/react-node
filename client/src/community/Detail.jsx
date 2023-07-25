@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Layout from '../common/Layout';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -26,8 +26,21 @@ const BtnSet = styled.nav`
 `;
 
 function Detail() {
+	const navigate = useNavigate();
 	const params = useParams();
 	const [Detail, setDetail] = useState(null); //doc 하나만 가져올거니까 배열아닌 객체
+
+	const handleDelete = () => {
+		if (!window.confirm('정말 삭제하시겠습니까?')) return;
+		axios.post('/api/community/delete', params).then((res) => {
+			if (res.data.success) {
+				alert('게시글이 삭제되었습니다.');
+				navigate('/list');
+			} else {
+				alert('게시글이 삭제되지 않았습니다.');
+			}
+		});
+	};
 
 	useEffect(() => {
 		axios
@@ -49,12 +62,10 @@ function Detail() {
 				<p>{Detail?.content}</p>
 			</DetailWrap>
 			<BtnSet>
-				<div>
-					<Link to={`/edit/${params.id}`}>Edit</Link>
-				</div>
-				<div>
-					<Link>Delete</Link>
-				</div>
+				<Link to={`/edit/${params.id}`}>Edit</Link>
+				<button type='button' onClick={handleDelete}>
+					Delete
+				</button>
 			</BtnSet>
 		</Layout>
 	);
