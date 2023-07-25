@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, getDefaultMiddleware } from '@reduxjs/toolkit';
 
 //reducer만들기
 
