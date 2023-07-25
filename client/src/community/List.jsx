@@ -17,7 +17,7 @@ function List() {
 
 	useEffect(() => {
 		axios.get('/api/community/read').then((res) => {
-			console.log(res);
+			// console.log(res);
 			setPosts(res.data.communityList);
 		});
 		// .catch((res) => {

@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import firebase from '../firebase';
 
 const HeaderWrap = styled.header`
 	width: 350px;
@@ -55,24 +56,46 @@ function Header() {
 						Show List
 					</NavLink>
 				</li>
-				<li>
-					<NavLink to='/create' style={(props) => (props.isActive ? activeStyle : null)}>
-						Write Post
-					</NavLink>
-				</li>
+				{user.uid !== '' && (
+					<li>
+						<NavLink to='/create' style={(props) => (props.isActive ? activeStyle : null)}>
+							Write Post
+						</NavLink>
+					</li>
+				)}
 			</Gnb>
 
 			<Util>
-				<li>
-					<NavLink to='/login' style={(props) => (props.isActive ? activeStyle : null)}>
-						Login
-					</NavLink>
-				</li>
-				<li>
-					<NavLink to='/join' style={(props) => (props.isActive ? activeStyle : null)}>
-						Join
-					</NavLink>
-				</li>
+				{user.uid === '' ? (
+					// 로그아웃 상태
+					<>
+						<li>
+							<NavLink to='/login' style={(props) => (props.isActive ? activeStyle : null)}>
+								Login
+							</NavLink>
+						</li>
+						<li>
+							<NavLink to='/join' style={(props) => (props.isActive ? activeStyle : null)}>
+								Join
+							</NavLink>
+						</li>
+					</>
+				) : (
+					// 로그인 상태
+					<>
+						<li>{`${user.displayName}님 반갑습니다.`}</li>
+						<li>
+							<button
+								type='button'
+								onClick={() => {
+									firebase.auth().signOut();
+								}}
+							>
+								로그아웃
+							</button>
+						</li>
+					</>
+				)}
 			</Util>
 		</HeaderWrap>
 	);
