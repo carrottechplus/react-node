@@ -16,7 +16,7 @@ function Login() {
 
 		try {
 			await firebase.auth().signInWithEmailAndPassword(Email, Pwd);
-			navigate(-1);
+			navigate('/');
 		} catch (err) {
 			console.log(err.code);
 			// 이메일 계정 잘못 입력했을 때 콘솔 : auth/user-not-found
