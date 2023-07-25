@@ -3,6 +3,7 @@ import Layout from '../common/Layout';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const DetailWrap = styled.div`
 	width: 100%;
@@ -26,6 +27,7 @@ const BtnSet = styled.nav`
 `;
 
 function Detail() {
+	const user = useSelector((store) => store.user);
 	const navigate = useNavigate();
 	const params = useParams();
 	const [Detail, setDetail] = useState(null); //doc 하나만 가져올거니까 배열아닌 객체
@@ -61,12 +63,14 @@ function Detail() {
 				<h2>{Detail?.title}</h2>
 				<p>{Detail?.content}</p>
 			</DetailWrap>
-			<BtnSet>
-				<Link to={`/edit/${params.id}`}>Edit</Link>
-				<button type='button' onClick={handleDelete}>
-					Delete
-				</button>
-			</BtnSet>
+			{user.uid !== '' && (
+				<BtnSet>
+					<Link to={`/edit/${params.id}`}>Edit</Link>
+					<button type='button' onClick={handleDelete}>
+						Delete
+					</button>
+				</BtnSet>
+			)}
 		</Layout>
 	);
 }
