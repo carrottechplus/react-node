@@ -6,10 +6,14 @@ import styled from 'styled-components';
 
 const Item = styled.article`
 	width: 100%;
-	padding: 30px 40px;
 	background: #fff;
 	box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.02);
 	margin-bottom: 50px;
+	a {
+		display: inline-block;
+		width: 100%;
+		padding: 30px 40px;
+	}
 `;
 
 function List() {

@@ -10,6 +10,8 @@ function Create() {
 
 	const handleCreate = () => {
 		const item = { title: Ttl, content: Con };
+		if (!(Ttl || Con)) return alert('모든 항목을 입력해주세요.');
+
 		axios
 			.post('/api/community/create', item)
 			.then((res) => {
