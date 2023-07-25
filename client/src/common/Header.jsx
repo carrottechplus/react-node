@@ -25,6 +25,18 @@ const Gnb = styled.ul`
 		color: #bbb;
 	}
 `;
+const Util = styled.ul`
+	position: absolute;
+	bottom: 50px;
+	left: 50px;
+	display: flex;
+	gap: 10px;
+	a {
+		padding: 10px;
+		font: 14px/1 'arial';
+		color: #777;
+	}
+`;
 
 function Header() {
 	const activeStyle = { color: 'orange' };
@@ -46,6 +58,19 @@ function Header() {
 					</NavLink>
 				</li>
 			</Gnb>
+
+			<Util>
+				<li>
+					<NavLink to='/login' style={(props) => (props.isActive ? activeStyle : null)}>
+						Login
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to='/join' style={(props) => (props.isActive ? activeStyle : null)}>
+						Join
+					</NavLink>
+				</li>
+			</Util>
 		</HeaderWrap>
 	);
 }

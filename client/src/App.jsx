@@ -7,6 +7,7 @@ import Detail from './community/Detail';
 import GlobalStyle from './GlobalStyle';
 import Edit from './community/Edit';
 import Join from './user/Join';
+import Login from './user/Login';
 
 function App() {
 	return (
@@ -21,6 +22,7 @@ function App() {
 				<Route path='/detail/:id' element={<Detail />} /> {/* :id : param */}
 				<Route path='/edit/:id' element={<Edit />} />
 				<Route path='/join' element={<Join />} />
+				<Route path='/login' element={<Login />} />
 			</Routes>
 		</>
 	);
