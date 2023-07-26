@@ -12,7 +12,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 // crud 여러군데 생길 수 있어서 각각의 폴더로 나눔
+// 커뮤니티 전용 라우터
 app.use('/api/community', require('./router/communityRouter.js'));
+
+// 유저 정보 전용 라우터
+app.use('/api/user', require('./router/userRouter.js'));
 
 app.listen(port, () => {
 	mongoose
