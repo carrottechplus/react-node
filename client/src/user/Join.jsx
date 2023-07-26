@@ -4,6 +4,7 @@ import firebase from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const BtnSet = styled.nav`
 	margin-top: 20px;
@@ -26,6 +27,20 @@ function Join() {
 		const createdUser = await firebase.auth().createUserWithEmailAndPassword(Email, Pwd01);
 		await createdUser.user.updateProfile({ displayName: Name });
 		console.log(createdUser.user);
+
+		const item = {
+			displayName: createdUser.multifactor.user.displayName,
+			uid: createdUser.user.multifactor.user.uid,
+		};
+
+		axios.post('/api/user/join', item).then((res) => {
+			if (res.data.success) {
+				//db 에 저장, 로그아웃 처리
+				firebase.auth().signOut();
+				alert('성공');
+				navigate('/login');
+			} else return alert('실패');
+		});
 
 		alert('회원가입이 완료되었습니다.');
 		navigate('/login');
