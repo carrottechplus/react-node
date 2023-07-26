@@ -29,8 +29,8 @@ function Join() {
 		console.log(createdUser.user);
 
 		const item = {
-			displayName: createdUser.multifactor.user.displayName,
-			uid: createdUser.user.multifactor.user.uid,
+			displayName: createdUser.user.multiFactor.user.displayName,
+			uid: createdUser.user.multiFactor.user.uid,
 		};
 
 		axios.post('/api/user/join', item).then((res) => {

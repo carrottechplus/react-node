@@ -17,6 +17,7 @@ router.post('/join', (req, res) => {
 			const userDate = new User(temp);
 			userData.save().then(() => {
 				Counter.updateOne({ name: 'counter' }, { $inc: { userNum: 1 } })
+					.exec()
 					.then(() => {
 						res.json({ success: true }); //프론트로 넘겨줌
 					})
