@@ -35,15 +35,11 @@ function Join() {
 
 		axios.post('/api/user/join', item).then((res) => {
 			if (res.data.success) {
-				//db 에 저장, 로그아웃 처리
 				firebase.auth().signOut();
-				alert('성공');
+				alert('성공적으로 회원가입 되었습니다.');
 				navigate('/login');
-			} else return alert('실패');
+			} else return alert('회원가입에 실패했습니다.');
 		});
-
-		alert('회원가입이 완료되었습니다.');
-		navigate('/login');
 	};
 
 	useEffect(() => {

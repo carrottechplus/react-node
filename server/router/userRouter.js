@@ -5,7 +5,6 @@ const { Counter } = require('../model/counterSchema');
 
 router.post('/join', (req, res) => {
 	const temp = req.body;
-	console.log(temp, 'temp');
 
 	Counter.findOne({ name: 'counter' })
 		.exec()
@@ -14,7 +13,7 @@ router.post('/join', (req, res) => {
 			// temp에는 프론트로부터 받은 displayName, uid값 들어갈 것.
 			// 추가로 서버에서 userNum값
 
-			const userDate = new User(temp);
+			const userData = new User(temp);
 			userData.save().then(() => {
 				Counter.updateOne({ name: 'counter' }, { $inc: { userNum: 1 } })
 					.exec()
