@@ -5,6 +5,7 @@ const postSchema = new mongoose.Schema(
 		title: String,
 		content: String,
 		communityNum: Number,
+		userNum: Number, //user정보값을 post 다큐먼트에서 참조하기 위해 userNum항목 postSchema에 추가
 	},
 	{ collection: 'Posts' }
 );
