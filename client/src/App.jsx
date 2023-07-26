@@ -18,11 +18,11 @@ function App() {
 
 	useEffect(() => {
 		//강제로 로그아웃 처리 메서드
-		firebase.auth().signOut();
+		// firebase.auth().signOut();
 
 		//컴포넌트가 마운트 되자마자 userInfo(콜백함수의 파라미터) 값이 담겨있는지 아닌지 (null) 확인
 		firebase.auth().onAuthStateChanged((userInfo) => {
-			console.log(userInfo);
+			// console.log(userInfo);
 
 			if (userInfo === null) dispatch(logoutUser());
 			else dispatch(loginUser(userInfo.multiFactor.user));

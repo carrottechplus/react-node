@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '../common/Layout';
 import firebase from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const BtnSet = styled.nav`
 	margin-top: 20px;
@@ -10,6 +11,7 @@ const BtnSet = styled.nav`
 	gap: 20px;
 `;
 function Join() {
+	const user = useSelector((store) => store.user);
 	const navigate = useNavigate();
 	const [Email, setEmail] = useState('');
 	const [Pwd01, setPwd01] = useState('');
@@ -28,6 +30,10 @@ function Join() {
 		alert('회원가입이 완료되었습니다.');
 		navigate('/login');
 	};
+
+	useEffect(() => {
+		if (user.uid !== '') navigate('/');
+	}, [navigate, user]);
 
 	return (
 		<Layout name={'Join'}>

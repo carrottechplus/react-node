@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../common/Layout';
 import firebase from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-	// console.log(useSelector((store) => store));
+	const user = useSelector((store) => store.user);
 	const [Email, setEmail] = useState('');
 	const [Pwd, setPwd] = useState('');
 	const [Err, setErr] = useState('');
@@ -30,6 +30,10 @@ function Login() {
 			else setErr('로그인에 실패했습니다.');
 		}
 	};
+
+	useEffect(() => {
+		if (user.uid !== '') navigate('/');
+	}, [navigate, user]);
 
 	return (
 		<Layout name={'Login'}>
