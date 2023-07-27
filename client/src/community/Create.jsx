@@ -11,7 +11,7 @@ function Create() {
 	const [Con, setCon] = useState('');
 
 	const handleCreate = () => {
-		const item = { title: Ttl, content: Con };
+		const item = { title: Ttl, content: Con, uid: user.uid };
 		if (!(Ttl || Con)) return alert('모든 항목을 입력해주세요.');
 
 		axios

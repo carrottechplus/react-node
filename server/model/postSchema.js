@@ -5,11 +5,15 @@ const postSchema = new mongoose.Schema(
 		title: String,
 		content: String,
 		communityNum: Number,
-		userNum: Number, //user정보값을 post 다큐먼트에서 참조하기 위해 userNum항목 postSchema에 추가
+		//User컬랙션에서 참조하고자 하는 document의 object_id가 등록되면
+		//해당 다큐먼트의 정보값을 post에서 참조
+		writer: {
+			ref: 'User',
+			type: mongoose.Schema.Types.ObjectId,
+		},
 	},
-	{ collection: 'Posts' }
+	{ collection: 'Posts', timestamps: true }
 );
 
-// 게시글 스키마구조가 적용된 모델 생성자 함수를 만든 뒤 export
 const Post = mongoose.model('Post', postSchema);
 module.exports = { Post };

@@ -20,13 +20,10 @@ function List() {
 	const [Posts, setPosts] = useState([]);
 
 	useEffect(() => {
-		axios.get('/api/community/read').then((res) => {
+		axios.post('/api/community/read').then((res) => {
 			// console.log(res);
 			setPosts(res.data.communityList);
 		});
-		// .catch((res) => {
-		// 	console.log(res);
-		// });
 	}, []);
 	return (
 		<Layout name={'List'}>
@@ -36,6 +33,12 @@ function List() {
 						<h2>
 							<Link to={`/detail/${post.communityNum}`}>{post.title}</Link>
 						</h2>
+						<p>작성자: {post.writer.displayName}</p>
+
+						<ul>
+							<li>수정 날짜 : {post.updatedAt.split('T')[0]}</li>
+							<li>글 작성 날짜 : {post.createdAt.split('T')[0]}</li>
+						</ul>
 					</Item>
 				);
 			})}

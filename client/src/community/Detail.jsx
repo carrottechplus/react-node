@@ -62,8 +62,13 @@ function Detail() {
 			<DetailWrap>
 				<h2>{Detail?.title}</h2>
 				<p>{Detail?.content}</p>
+				<p>글작성자: {Detail?.writer.displayName}</p>
+				<ul>
+					<li>수정 날짜 : {Detail?.updatedAt.split('T')[0]}</li>
+					<li>글 작성 날짜 : {Detail?.createdAt.split('T')[0]}</li>
+				</ul>
 			</DetailWrap>
-			{user.uid !== '' && (
+			{user.uid === Detail?.writer.uid && (
 				<BtnSet>
 					<Link to={`/edit/${params.id}`}>Edit</Link>
 					<button type='button' onClick={handleDelete}>
