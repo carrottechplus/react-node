@@ -15,7 +15,7 @@ const Item = styled.article`
 function Main() {
 	const [List, setList] = useState([]);
 	useEffect(() => {
-		axios.post('/api/community/read', { count: 3 }).then((res) => {
+		axios.get(`/api/community/read/3`).then((res) => {
 			// res에는 목록출력라우터의 success true일것
 			if (res.data.success) setList(res.data.communityList);
 		});
@@ -30,7 +30,7 @@ function Main() {
 				return (
 					<Item key={post._id}>
 						<h2>
-							<Link to={`/detail/${post.communityNum}`}></Link>
+							<Link to={`/detail/${post.communityNum}`}>{post.title}</Link>
 						</h2>
 						<p>작성자 : {post.writer.displayName}</p>
 						<p>작성일 : {post.createdAt.split('T')[0]}</p>

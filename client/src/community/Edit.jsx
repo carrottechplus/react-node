@@ -30,7 +30,7 @@ function Edit() {
 			id: params.id,
 		};
 
-		axios.post('/api/community/edit', item).then((res) => {
+		axios.put('/api/community/edit', item).then((res) => {
 			if (res.data.success) {
 				alert('글 수정이 완료 되었습니다.');
 				navigate(-1);
@@ -43,7 +43,7 @@ function Edit() {
 	useEffect(() => {
 		if (user.uid === '') navigate('/');
 		axios
-			.post('/api/community/detail', params)
+			.get(`/api/community/detail/${params.id}`)
 			.then((res) => {
 				if (res.data.success) {
 					setDetail(res.data.detail);

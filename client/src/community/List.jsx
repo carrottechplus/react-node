@@ -20,7 +20,8 @@ function List() {
 	const [Posts, setPosts] = useState([]);
 
 	useEffect(() => {
-		axios.post('/api/community/read').then((res) => {
+		axios.get('/api/community/read/0').then((res) => {
+			//read뒤에 0 자르지않고 다 가져온다는
 			// console.log(res);
 			setPosts(res.data.communityList);
 		});
